@@ -1,4 +1,5 @@
-import '../styles/App.scss';
+import '../styles/components/App.scss';
+import '../styles/core/Reset.scss';
 import blackboard from '../images/blackboard.jpg';
 import { useState, useEffect } from 'react';
 import getWord from '../services/callToApi';
