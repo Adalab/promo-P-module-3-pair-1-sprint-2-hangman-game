@@ -3,6 +3,8 @@ import blackboard from '../images/blackboard.jpg';
 import { useState, useEffect } from 'react';
 import getWord from '../services/callToApi';
 import Header from './Header';
+import Dummy from './Dummy';
+import SolutionLetters from './SolutionLetters';
 
 function App() {
   //FETCH
@@ -43,18 +45,6 @@ function App() {
     return errorLetters.length;
   };
 
-  const renderSolutionLetters = () => {
-    const wordLetters = word.split('');
-    return wordLetters.map((letter, index) => {
-      const exists = userLetters.includes(letter.toLocaleLowerCase());
-      return (
-        <li key={index} className="letter">
-          {exists ? letter : ''}
-        </li>
-      );
-    });
-  };
-
   const renderErrorLetters = () => {
     const errorLetters = userLetters.filter(
       (letter) =>
@@ -81,15 +71,10 @@ function App() {
 
   return (
     <div className="page">
-      <header>
-        <h1 className="header__title">Juego del ahorcado</h1>
-      </header>
+      <Header />
       <main className="main">
         <section>
-          <div className="solution">
-            <h2 className="title">Solución:</h2>
-            <ul className="letters">{renderSolutionLetters()}</ul>
-          </div>
+          <SolutionLetters word={word} userLetters={userLetters} />
           <div className="error">
             <h2 className="title">Letras falladas:</h2>
             <ul className="letters">{renderErrorLetters()}</ul>
@@ -112,21 +97,7 @@ function App() {
             />
           </form>
         </section>
-        <section className={`dummy error-${getNumberOfErrors()}`}>
-          <span className="error-13 eye"></span>
-          <span className="error-12 eye"></span>
-          <span className="error-11 line"></span>
-          <span className="error-10 line"></span>
-          <span className="error-9  line"></span>
-          <span className="error-8  line"></span>
-          <span className="error-7  line"></span>
-          <span className="error-6  head"></span>
-          <span className="error-5  line"></span>
-          <span className="error-4  line"></span>
-          <span className="error-3  line"></span>
-          <span className="error-2  line"></span>
-          <span className="error-1  line"></span>
-        </section>
+        <Dummy numberOfErrors={getNumberOfErrors()} />
       </main>
     </div>
   );
