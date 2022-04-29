@@ -1,4 +1,6 @@
 import '../styles/components/Letters.scss';
+import '../styles/components/Form.scss';
+
 const SolutionLetters = (props) => {
   const renderSolutionLetters = () => {
     const wordLetters = props.word.split('');

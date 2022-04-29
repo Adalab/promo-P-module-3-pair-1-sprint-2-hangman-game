@@ -2,10 +2,14 @@ import '../styles/components/App.scss';
 import '../styles/core/Reset.scss';
 import blackboard from '../images/blackboard.jpg';
 import { useState, useEffect } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import getWord from '../services/callToApi';
 import Header from './Header';
 import Dummy from './Dummy';
 import SolutionLetters from './SolutionLetters';
+import Footer from './Footer';
+import Instructions from './Instructions';
+import Options from './Options';
 
 function App() {
   //FETCH
@@ -73,33 +77,44 @@ function App() {
   return (
     <div className="page">
       <Header />
-      <main className="main">
-        <section>
-          <SolutionLetters word={word} userLetters={userLetters} />
-          <div className="error">
-            <h2 className="title">Letras falladas:</h2>
-            <ul className="letters">{renderErrorLetters()}</ul>
-          </div>
-          <form className="form" onSubmit={handleSubmit}>
-            <label className="title" htmlFor="last-letter">
-              Escribe una letra:
-            </label>
-            <input
-              autoFocus
-              autoComplete="off"
-              className="form__input"
-              maxLength="1"
-              type="text"
-              name="last-letter"
-              id="last-letter"
-              value={lastLetter}
-              onKeyDown={handleKeyDown}
-              onChange={handleChange}
-            />
-          </form>
-        </section>
-        <Dummy numberOfErrors={getNumberOfErrors()} />
-      </main>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <main className="main">
+              <section>
+                <SolutionLetters word={word} userLetters={userLetters} />
+                <div className="error">
+                  <h2 className="title">Letras falladas:</h2>
+                  <ul className="letters">{renderErrorLetters()}</ul>
+                </div>
+                <form className="form" onSubmit={handleSubmit}>
+                  <label className="title" htmlFor="last-letter">
+                    Escribe una letra:
+                  </label>
+                  <input
+                    autoFocus
+                    autoComplete="off"
+                    className="form__input"
+                    maxLength="1"
+                    type="text"
+                    name="last-letter"
+                    id="last-letter"
+                    value={lastLetter}
+                    onKeyDown={handleKeyDown}
+                    onChange={handleChange}
+                  />
+                </form>
+              </section>
+              <Dummy numberOfErrors={getNumberOfErrors()} />
+            </main>
+          }
+        />
+        <Route path="/instructions" element={<Instructions />} />
+        <Route path="/options" element={<Options />} />
+      </Routes>
+
+      <Footer />
     </div>
   );
 }
